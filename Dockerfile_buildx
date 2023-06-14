@@ -1,0 +1,29 @@
+#FROM node:19.2-alpine3.16
+#FROM --platform=linux/amd64 node:19.2-alpine3.16
+
+#* BUILDX
+FROM --platform=$BUILDPLATFORM node:19.2-alpine3.16
+# /app /usr /lib
+
+# cd /app
+WORKDIR /app
+
+COPY package.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copiar todo el proyecto
+COPY . .
+
+# Realizar testing
+RUN npm run test
+
+# Delete tests 
+RUN rm -rf tests && rm -rf node_modules
+
+# Install production depedencies
+RUN npm install --prod
+
+# Entrypoint
+CMD ["npm", "start"]
