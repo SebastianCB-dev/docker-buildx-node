@@ -25,7 +25,7 @@ RUN npm install --prod
 
 
 #FROM --platform=$BUILDPLATFORM node:19.2-alpine3.16 as runner
-FROM node:19.2-alpine3.16 as runner
+FROM --platform=$BUILDPLATFORM node:19.2-alpine3.16 as runner
 # cd /app
 WORKDIR /app
 COPY --from=prod-deps /app/node_modules ./node_modules
